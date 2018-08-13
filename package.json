@@ -1,0 +1,31 @@
+{
+  "name": "immutable-ts",
+  "version": "0.1.0",
+  "description": "Immutable data structures for TypeSript",
+  "main": "index.ts",
+  "scripts": {
+      "test": "TS_NODE_COMPILER_OPTIONS='{\"module\":\"commonjs\"}' mocha --require ts-node/register './src/**/*.spec.ts'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pavlo-iuriichuk/immutable-ts.git"
+  },
+  "keywords": [
+    "immutable",
+    "typescript"
+  ],
+  "author": "Pavlo Iuriichuk <pavlo.iuriichuk@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/pavlo-iuriichuk/immutable-ts/issues"
+  },
+  "homepage": "https://github.com/pavlo-iuriichuk/immutable-ts#readme",
+  "dependencies": {
+    "@types/chai": "^4.1.4",
+    "@types/mocha": "^5.2.5",
+    "chai": "^4.1.2",
+    "mocha": "^5.2.0",
+    "ts-node": "^7.0.1",
+    "typescript": "^3.0.1"
+  }
+}
