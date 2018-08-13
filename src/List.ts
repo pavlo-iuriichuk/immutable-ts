@@ -20,19 +20,19 @@ export class List<T = {}> {
   }
 
   private readonly data: T = null;
-  private readonly tail: List<T> = null;
+  private readonly head: List<T> = null;
 
-  constructor(data: T = null, tail: List<T> = null) {
+  constructor(data: T = null, head: List<T> = null) {
     this.data = data;
-    this.tail = tail;
+    this.head = head;
   }
 
   public isEmpty(): boolean {
-    return this.data === null && this.tail === null;
+    return this.data === null && this.head === null;
   }
 
   public isHead(): boolean {
-    return this.tail === null;
+    return this.head === null;
   }
 
   public append(data: T): List<T> {
@@ -43,7 +43,7 @@ export class List<T = {}> {
     if (this.isEmpty()) {
       return new List(data, this);
     } else {
-      return new List(this.data, new List(data, this.tail));
+      return new List(this.data, new List(data, this.head));
     }
   }
 
@@ -56,7 +56,7 @@ export class List<T = {}> {
   }
 
   public pop(): List<T> {
-    return this.tail;
+    return this.head;
   }
 
   public peek(): T {
@@ -86,7 +86,7 @@ export class List<T = {}> {
     }
     while (!current.isHead()) {
       yield current.data;
-      current = current.tail;
+      current = current.head;
     }
     if (current.data !== null) {
       yield current.data;
@@ -107,7 +107,7 @@ export class List<T = {}> {
           done: current.isHead(),
           value: current.data
         };
-        current = current.tail;
+        current = current.head;
         return result;
       }
     };
