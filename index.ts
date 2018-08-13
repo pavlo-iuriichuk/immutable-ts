@@ -1,4 +1,4 @@
-import { List } from "./src/index";
+import { List } from "./src/List";
 export {
     List
 }

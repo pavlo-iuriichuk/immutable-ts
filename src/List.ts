@@ -4,35 +4,47 @@ export class List<T = {}> {
     return List.empty as List<T>;
   }
 
-  public static fromArray<T>(arr: Array<T>) {
-    if (arr.length === 0) {
-      return List.Empty();
+  public static from<T>(obj: Array<T> | T) {
+    if (Array.isArray(obj)) {
+      if (obj.length === 0) {
+        return List.Empty();
+      }
+      let current = List.Empty();
+      for (const element of obj) {
+        current = current.append(element);
+      }
+      return current;
+    } else {
+      return new List(obj);
     }
-    let current = List.Empty();
-    for (const element of arr) {
-      current = current.add(element);
-    }
-    return current;
   }
 
-  private readonly head: T = null;
+  private readonly data: T = null;
   private readonly tail: List<T> = null;
 
   constructor(data: T = null, tail: List<T> = null) {
-    this.head = data;
+    this.data = data;
     this.tail = tail;
   }
 
   public isEmpty(): boolean {
-    return this.head === null && this.tail === null;
+    return this.data === null && this.tail === null;
   }
 
-  public isLast(): boolean {
+  public isHead(): boolean {
     return this.tail === null;
   }
 
-  public add(data: T): List<T> {
+  public append(data: T): List<T> {
     return new List(data, this);
+  }
+
+  public prepend(data: T): List<T> {
+    if (this.isEmpty()) {
+      return new List(data, this);
+    } else {
+      return new List(this.data, new List(data, this.tail));
+    }
   }
 
   public reverse(): List<T> {
@@ -48,8 +60,8 @@ export class List<T = {}> {
   }
 
   public peek(): T {
-    return this.head;
-  }
+    return this.data;
+  } 
 
   public size(): number {
     let result = 0;
@@ -64,7 +76,7 @@ export class List<T = {}> {
     for (const element of this.generator()) {
       result.push(element);
     }
-    return result.reverse();
+    return result;
   }
 
   public *generator(): Iterable<T> {
@@ -72,12 +84,12 @@ export class List<T = {}> {
     if (current.isEmpty()) {
       return null;
     }
-    while (!current.isLast()) {
-      yield current.head;
+    while (!current.isHead()) {
+      yield current.data;
       current = current.tail;
     }
-    if (current.head !== null) {
-      yield current.head;
+    if (current.data !== null) {
+      yield current.data;
     }
   }
 
@@ -92,8 +104,8 @@ export class List<T = {}> {
           };
         }
         result = {
-          done: current.isLast(),
-          value: current.head
+          done: current.isHead(),
+          value: current.data
         };
         current = current.tail;
         return result;
